@@ -125,7 +125,7 @@ def search_for_keyword(input):
 			index_dot = response_predecessor.index(item)
 	print index_dot
 	
-	for item in range(index_dot+1,len(response_predecessor)):
+	for item in range(index_dot,len(response_predecessor)):
 		response_predecessor_finish.append(response_predecessor[item])
 		
 
@@ -136,8 +136,13 @@ def search_for_keyword(input):
 
 	#response_predecessor = ' '.join(response_predecessor)
 	response_successor = ' '.join(response_successor)
+	print response_predecessor_finish
 	
-	response = response_predecessor_finish," "+response_successor
+	
+	response_predecessor = ' '.join(str(element) for element in response_predecessor_finish)
+	response_predecessor = response_predecessor.split('.',1)[1]
+	
+	response = response_predecessor+" "+response_successor
 	print "predecessor: ",response_predecessor
 	print "sucessor: ",response_successor
 
