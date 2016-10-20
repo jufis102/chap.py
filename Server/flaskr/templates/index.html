@@ -1,0 +1,49 @@
+{% include 'base.jinja' %}
+
+{% block content %}
+<script type=text/javascript>
+  $(function() {
+    $('#send').bind('click', function() {
+      $.getJSON($SCRIPT_ROOT + '/get_user_input', {
+        input: $('textArea[name="input"]').val()
+        
+      }, function(data) {
+		$("#result").append("Du: "+data.input+"\n");
+        $("#result").append("Chap.py: "+data.result+"\n");
+      });
+      return false;
+    });
+  });
+</script>
+
+<div class="col-lg-2">
+  <fieldset>
+    <legend>Chap.py</legend>
+    
+    <div class="form-group">
+      <label for="textArea" class="col-lg-2 control-label">Chatbox</label>
+      <div class="col-lg-10">
+        <textarea class="form-control" rows="3" id="result" name=result disabled=""></textarea>
+        <span class="help-block" >Chap.py's answer</span>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="textArea" class="col-lg-2 control-label">Input</label>
+      <div class="col-lg-10">
+        <textarea class="form-control" rows="3" id="textArea" name=input></textarea>
+        <span class="help-block">Talk to Chap.py</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-lg-10 col-lg-offset-2">
+        <button type="reset" class="btn btn-default">Cancel</button>
+        <button type="submit" class="btn btn-primary" id=send name=send>Send</button>
+      </div>
+    </div>
+  </fieldset>
+</div>
+
+{% endblock %}
+
