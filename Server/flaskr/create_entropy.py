@@ -2,7 +2,7 @@ import math
 import sqlite3
 import re
 from collections import Counter
-from nltk import SnowballStemmer
+#from nltk import SnowballStemmer
 
 def create_entropy():
 
@@ -28,10 +28,10 @@ def create_entropy():
 	#print countingWords
 	'''Woerter stemmen, also auf ihren Wortstamm zurueckfueren'''
 	
-	stemmer1 = SnowballStemmer('german')
+	#stemmer1 = SnowballStemmer('german')
 
-	stem =stemmer1.stem(wordlist)
-	print stem
+	#stem =stemmer1.stem(wordlist)
+	#print stem
 	
 	'''gesamte Laenge des Corpus '''
 	laenge = len(countingWords)

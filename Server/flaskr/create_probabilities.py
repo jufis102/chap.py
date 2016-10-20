@@ -3,6 +3,15 @@
 '''
 import sqlite3
 
+def drop_probability():
+	
+    conn = sqlite3.connect("chappies_brain.db")
+    c = conn.cursor()
+    c.execute("DELETE from Kette")
+    conn.commit()
+    conn.close()
+	
+	
 def calculate_probability():
 	conn = sqlite3.connect("chappies_brain.db")
 	c = conn.cursor()
