@@ -29,10 +29,10 @@ def calculate_probability():
 	
 	#length = len(marcov_chain)
 	values = []
-	
+	# hole zahl aller elemente in db
 	for row in c.execute('SELECT  count(*) FROM corpus'):
 		laenge = row[0]
-	
+	# count vorkommen einer kette
 	for row in c.execute('SELECT  corpus, count(*) as c, count(*) FROM corpus group by corpus'):
 		probability = float(row[1])/float(laenge)
 		#print row[0],probability
@@ -51,7 +51,7 @@ def calculate_probability():
 		
 		einfuegen der wahrscheinlichkeiten in DB'''
 	
-	
+	# executemany schreibt die ganze liste auf einmal. keine iteration nötig
 	c.executemany("INSERT OR IGNORE INTO kette VALUES (?,?) ",values)
 
 	conn.commit()
