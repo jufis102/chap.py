@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, render_template, request
-from search_for_keyword import search_for_keyword
+from search_for_keyword import search_for_keyword, get_top_entropies
 from create_corpus import write_to_corpus, create_marcov_chain
 from create_entropy import create_entropy
 from create_probabilities import calculate_probability, drop_probability
@@ -23,7 +23,7 @@ def init_learning(input_text):
 def get_user_input():
     input = request.args.get('input', type=str)
     print input
-    
+    output = get_top_entropies(input)
     #to do verarbeite input = output
     output = search_for_keyword(input)
     

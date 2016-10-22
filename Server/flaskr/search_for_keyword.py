@@ -6,6 +6,14 @@
 import sqlite3
 import re
 
+def get_top_entropies(input):
+	print input.split(" ")
+	
+	conn = sqlite3.connect("chappies_brain.db")
+	c = conn.cursor()
+	
+	#c.execute('')
+
 '''Keywordsuche zum ausgeben des wahrscheinlichsten Satzes'''
 def search_for_keyword(input):
 	
@@ -127,8 +135,6 @@ def search_for_keyword(input):
 	
 	for item in range(index_dot,len(response_predecessor)):
 		response_predecessor_finish.append(response_predecessor[item])
-		
-
 		
 	response_predecessor = response_predecessor[-1]
 	response_successor = response_successor[1:]

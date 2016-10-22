@@ -2,36 +2,32 @@ import math
 import sqlite3
 import re
 from collections import Counter
-#from nltk import SnowballStemmer
+from cStringIO import StringIO
+
+def delete_entropy():
+	conn = sqlite3.connect("chappies_brain.db")
+	c = conn.cursor()
+	
+	c.execute("DELETE from Entropy")
+	conn.commit()
+	conn.close()
+
 
 def create_entropy():
 
 	conn = sqlite3.connect("chappies_brain.db")
 	c = conn.cursor()
-	
-	wordlist = []
-	stringList = []
-	string = ""
-	
+
+	file_str = StringIO()
+
 	for row in c.execute('SELECT corpus FROM corpus'):
-		wordlist.append(row)
-	#print wordlist
+		file_str.write(row[0])
+	#print file_str
 	
-	'''typeUmwandlung von Tuple in String zur weiterverarbeitung des Corpus'''
-	for item in wordlist:
-		#print item[0]
-		item = " "+item[0]
-		string += item
-	StringList = string.split(" ")
+	StringList = (file_str.getvalue()).split(" ")
 	
 	countingWords = Counter(StringList)
 	#print countingWords
-	'''Woerter stemmen, also auf ihren Wortstamm zurueckfueren'''
-	
-	#stemmer1 = SnowballStemmer('german')
-
-	#stem =stemmer1.stem(wordlist)
-	#print stem
 	
 	'''gesamte Laenge des Corpus '''
 	laenge = len(countingWords)
@@ -56,4 +52,5 @@ def create_entropy():
 	conn.close()
 	
 if __name__ == "__main__":
+	delete_entropy()
 	create_entropy()
