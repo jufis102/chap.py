@@ -11,31 +11,22 @@ def get_top_entropies(input):
 	user_input = input.split(" ")
 	print user_input
 	
-	user_input = ' '.join(user_input)
-	print user_input
-	
 	conn = sqlite3.connect("chappies_brain.db")
 	c = conn.cursor()
 	
-	neue_liste = []
 	
-	for row in c.execute('SELECT wort,entropy FROM Entropy WHERE wort like"%'+ user_input +'%"'):
-		ausgabe = row
+	for element in user_input:
+		print element
+		for row in c.execute('SELECT wort,entropy FROM Entropy WHERE wort = "'+element+'"'):
+			ausgabe = row
 		
-		print ausgabe
-	#for row in c.execute('SELECT wort,entropy FROM Entropy (WHERE wort = "%'+user_input+'%") ORDER BY entropy'):
-	#	neue_liste.append(row)
-	#print neue_liste
-	
+			print ausgabe
 	'''
 	-top drei keywords sollen beachtet werden
 	-es sollen die keywords mit der besten entropie(niedrigster wert) genommen werden
 	-dann soll ein satz der das beste keyword enthaelt ausgegeben werden
 	'''
-	#for row in c.execute('SELECT wort FROM Entropy WHERE wort = "%'+input+'%" ORDER BY entropy DESC limit 3'):
-	#	entropie_anfrage = row
-	#	print row
-		
+	
 	conn.commit()
 	conn.close()
 
@@ -180,6 +171,6 @@ def search_for_keyword(input):
 	return response
 
 if __name__ == "__main__":
-	get_top_entropies("this piercings is that")
+	get_top_entropies("this piercings is that forfriends")
 	#search_for_keyword("")
 
