@@ -9,18 +9,21 @@ import re
 def get_top_entropies(input):
 	
 	user_input = input.split(" ")
-	print user_input
+	#print user_input
 	
 	conn = sqlite3.connect("chappies_brain.db")
 	c = conn.cursor()
 	
-	
+	top_entropie_words = []
 	for element in user_input:
-		print element
+		#print element
 		for row in c.execute('SELECT wort,entropy FROM Entropy WHERE wort = "'+element+'"'):
 			ausgabe = row
-		
-			print ausgabe
+			#print type(ausgabe)
+		ausgabe = list(ausgabe)
+		top_entropie_words.extend(ausgabe)
+
+	print top_entropie_words
 	'''
 	-top drei keywords sollen beachtet werden
 	-es sollen die keywords mit der besten entropie(niedrigster wert) genommen werden
