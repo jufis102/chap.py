@@ -21,9 +21,11 @@ def get_top_entropies(input):
 			ausgabe = row
 			#print type(ausgabe)
 		ausgabe = list(ausgabe)
-		top_entropie_words.extend(ausgabe)
+		top_entropie_words.append(ausgabe)
 
 	print top_entropie_words
+	
+	
 	'''
 	-top drei keywords sollen beachtet werden
 	-es sollen die keywords mit der besten entropie(niedrigster wert) genommen werden
