@@ -22,8 +22,11 @@ def get_top_entropies(input):
 			#print type(ausgabe)
 		ausgabe = list(ausgabe)
 		top_entropie_words.append(ausgabe)
+		'''sortiert die Liste nach ihrer Entropy'''
+		top_entropie_words.sort(key = lambda row: row[1])
 
 	print top_entropie_words
+	
 	
 	
 	'''
@@ -176,6 +179,6 @@ def search_for_keyword(input):
 	return response
 
 if __name__ == "__main__":
-	get_top_entropies("this piercings is that forfriends")
+	get_top_entropies("this is that forfriends")
 	#search_for_keyword("")
 
