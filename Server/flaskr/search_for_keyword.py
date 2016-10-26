@@ -25,9 +25,16 @@ def get_top_entropies(input):
 		'''sortiert die Liste nach ihrer Entropy'''
 		top_entropie_words.sort(key = lambda row: row[1])
 
-	print top_entropie_words
+	#print top_entropie_words
+
+	top_3_words = top_entropie_words[0:3]
+	#print top_3_words
+	top_3_words = [item[0] for item in top_3_words]
 	
-	
+	for row in c.execute('SELECT kette FROM Kette WHERE kette like"%'+top_3_words[0]+'%" AND kette like"%'+top_3_words[1]+'%" AND kette like"%'+top_3_words[2]+'%"'):
+		topWord = row
+		#topWord = list(topWord)
+	print topWord
 	
 	'''
 	-top drei keywords sollen beachtet werden
@@ -179,6 +186,6 @@ def search_for_keyword(input):
 	return response
 
 if __name__ == "__main__":
-	get_top_entropies("this is that forfriends")
-	#search_for_keyword("")
+	get_top_entropies("But seeing them to")
+	#search_for_keyword("But seeing them to")
 
