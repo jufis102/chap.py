@@ -183,6 +183,7 @@ legend {
 }
 textarea {
   overflow: auto;
+  overflow-y: auto;
 }
 optgroup {
   font-weight: bold;

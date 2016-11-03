@@ -8,7 +8,6 @@ app = Flask(__name__)
 
 app.debug = True
 
-
 # initialisiere Lernvorgang
 def init_learning(input_text):
     marcov_chain = create_marcov_chain(input_text)
@@ -24,8 +23,9 @@ def get_user_input():
     input = request.args.get('input', type=str)
     print input
     output = get_top_entropies(input)
+    #print output
     #to do verarbeite input = output
-    output = search_for_keyword(input)
+    output = search_for_keyword(output)
     
     
     return jsonify(result=output,input=input)
