@@ -1,10 +1,12 @@
 '''To do: 
-	-wahrscheinlichsten vorgaenger und nachfolger auf ein keyword suchen
-	 und ausgeben lassen
 	-verfahren ueberlegen wenn mehrere gleiche ergebnisse
+	-ordentliche Stoppwortabfrage, anfangsymbole, endsymbole 
+	gross und kleinschreibung soll nicht beachtet werden 
+	woerter in woertern duerfen nicht beruecksichtigt werden
 '''
 import sqlite3
 import re
+
 
 def get_top_entropies(input):
 	
@@ -18,14 +20,21 @@ def get_top_entropies(input):
 	for element in user_input:
 		print "Element: " ,element
 		# if sql null
-		for ausgabe in c.execute('SELECT wort,entropy FROM Entropy WHERE wort = "'+element+'" ORDER BY entropy DESC limit 1'):
-
+		for ausgabe in c.execute('SELECT wort,entropy FROM Entropy \
+		WHERE wort = "'+element+'" ORDER BY entropy DESC limit 1'):
+			
 			print "sql Entropy: ",ausgabe
-			#if ausgabe == None:
-			#	pass
-		ausgabe = list(ausgabe)
-		print ausgabe
-		top_entropie_words.append(ausgabe)
+			
+		cursor = c.execute('SELECT wort,entropy FROM Entropy \
+		WHERE wort = "'+element+'" ORDER BY entropy DESC limit 1')
+		cursor_len = len(cursor.fetchall())
+		print cursor_len
+		
+		if cursor_len > 0:
+			ausgabe = list(ausgabe)
+			print ausgabe
+			top_entropie_words.append(ausgabe)
+		
 		'''sortiert die Liste nach ihrer Entropy'''
 	top_entropie_words.sort(key = lambda row: row[1])
 
@@ -46,34 +55,53 @@ def get_top_entropies(input):
 	
 '''Keywordsuche zum ausgeben des wahrscheinlichsten Satzes'''
 def search_for_keyword(top_3_words):
-	
+
 	response_predecessor = []
 	response_successor = []
 
 	conn = sqlite3.connect("chappies_brain.db")
 	c = conn.cursor()
+
+	#top1 = top_3_words[0]
+	#top2 = top_3_words[1]
+	#top3 = top_3_words[2]
+	try:
+		top1 = top_3_words[0]
+	except:
+		top1 = "null"
+	try:
+		top2 = top_3_words[1]
+	except:
+		top2 = "null"
+	try:
+		top3 = top_3_words[2]
+	except:
+		top3 = "null"
 	
-	top1 = top_3_words[0]
-	top2 = top_3_words[1]
-	top3 = top_3_words[2]
-	
+	print "Top1= ",top1," Top2= ",top2," Top3= ",top3
 
 	for row in c.execute('SELECT kette, probability FROM Kette \
-	WHERE (kette like ? AND kette like ? AND kette like ?)\
+	WHERE \
+	   (kette like ? AND kette like ? AND kette like ?)\
 	OR (kette like ? AND kette like ?)\
 	OR (kette like ? AND kette like ?)\
 	OR (kette like ? AND kette like ?)\
 	OR (kette like ?)\
 	OR (kette like ?)\
 	OR (kette like ?)\
-	ORDER BY probability DESC limit 1',["%"+top1+"%","%"+top2+"%","%"+top3+"%","%"+top1+"%","%"+top2+"%","%"+top1+"%","%"+top3+"%","%"+top2+"%","%"+top3+"%","%"+top1+"%","%"+top2+"%","%"+top3+"%"]):
+	ORDER BY probability DESC limit 1',["%"+" "+top1+" "+"%","%"+" "+top2+" "+"%","%"+" "+top3+" "+"%",\
+	"%"+" "+top1+" "+"%","%"+" "+top2+" "+"%",\
+	"%"+" "+top1+" "+"%","%"+" "+top3+" "+"%",\
+	"%"+" "+top2+" "+"%","%"+" "+top3+" "+"%",\
+	"%"+" "+top1+" "+"%",\
+	"%"+" "+top2+" "+"%",\
+	"%"+" "+top3+" "+"%"]):
 		ergebnis = row
-		
+
 	ergebnis = list(ergebnis)
-	print "Ergebnis: ",ergebnis
+	#print "Ergebnis: ",ergebnis
 	satz = ergebnis[0]
-	print satz
-	
+	#print satz
 
 	conn.commit()
 	conn.close()
@@ -100,27 +128,24 @@ def search_for_keyword(top_3_words):
 		#print neuerSatz
 
 		#try:
-		for row in c.execute('SELECT kette, probability FROM Kette WHERE '
-		'(kette like ?) AND NOT (kette like ?) ORDER BY probability DESC limit 1 ',["%"+neuerSatz+"%","%"+satz+"%"]):
+		for row in c.execute('SELECT kette, probability FROM Kette WHERE\
+		(kette like ?) AND NOT (kette like ?) ORDER BY probability DESC limit 1 ',["%"+neuerSatz+"%","%"+satz+"%"]):
 			ergebnis = row
 		conn.commit()
 		conn.close()
-		
+
 		ergebnis = list(ergebnis)
 		ergebnis = ergebnis[0]
-
 
 		vorgaenger_wort = ergebnis.split(" ")
 		#print ergebnis
 
-		
 		response_predecessor.insert(0,vorgaenger_wort[0])
-	
+
 		if "." in vorgaenger_wort[-1]:
 			print "Vorheriger Satz erkannt! Beginne hier:"
 		else:
 			search_predecessor_chain(ergebnis)
-
 
 	def search_successor_chain(satz):
 
@@ -138,28 +163,28 @@ def search_for_keyword(top_3_words):
 		neuerSatz = ' '.join(neuerSatz)
 		#print neuerSatz
 		''' to do: vernueftige fehlerbehandlung! wenn kein ergebnis mehr vorliegt was dannmachen?'''
-		for row in c.execute('SELECT kette, probability FROM Kette WHERE '
-		'(kette like ?) AND NOT (kette like ?) ORDER BY probability DESC limit 1 ',["%"+neuerSatz+"%","%"+satz+"%"]):
+		for row in c.execute('SELECT kette, probability FROM Kette WHERE \
+		(kette like ?) AND NOT (kette like ?) ORDER BY probability DESC limit 1 ',["%"+neuerSatz+"%","%"+satz+"%"]):
 			ergebnis = row
-		
+
 		ergebnis = list(ergebnis)
 		ergebnis = ergebnis[0]
 		conn.commit()
 		conn.close()
-		
-		print "Ergebnis: ",ergebnis
+
+		#print "Ergebnis: ",ergebnis
 		nachfolger_wort = ergebnis.split(" ")
 		#print ergebnis
 
 		regex = "."
-		
+
 		try:
 			response_successor.append(nachfolger_wort[-1])
 		except: 
 			pass
-			
+
 		#print "nachfolger_wort[-1]" +nachfolger_wort[-1]
-		
+
 		if "." in nachfolger_wort[-1]:
 			print "Found END of Sentence"
 		else:
@@ -168,20 +193,20 @@ def search_for_keyword(top_3_words):
 
 	search_predecessor_chain(satz)
 	search_successor_chain(satz)
-	
+
 	#print "predecessor: ",response_predecessor
 	response_predecessor_finish = []
 	for item in response_predecessor:
 		if "." in item:
 			index_dot = response_predecessor.index(item)
 	#print index_dot
-	
+
 	for item in range(index_dot,len(response_predecessor)):
 		response_predecessor_finish.append(response_predecessor[item])
-		
+
 	response_predecessor = response_predecessor[-1]
 	response_successor = response_successor[1:]
-	
+
 
 	#response_predecessor = ' '.join(response_predecessor)
 	response_successor = ' '.join(response_successor)
@@ -199,7 +224,7 @@ def search_for_keyword(top_3_words):
 
 if __name__ == "__main__":
 	
-	top_3_words = get_top_entropies("is Lincoln good territory")
-	
+	top_3_words = get_top_entropies("what is your physical hypothesis")
+	#top_3_words = get_top_entropies("is")
 	search_for_keyword(top_3_words)
 

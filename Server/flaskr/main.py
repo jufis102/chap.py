@@ -16,7 +16,7 @@ def init_learning(input_text):
     drop_probability()
     # calculate new probabilites
     calculate_probability()
-    #create_entropy()
+    create_entropy()
 
 @app.route('/get_user_input')
 def get_user_input():
