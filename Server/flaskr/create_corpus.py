@@ -13,16 +13,20 @@ def read_txt(filename):
 ###############################
 '''markov ketten erstellen '''
 def create_marcov_chain(input):
-    marcov_chain = []
-
-    split = input.split(" ")
-    for i in range(len(split)):
-        try:
+	marcov_chain = []
+	
+	#input.lower macht alle woerter klein
+	split = (input.lower()).split(" ")
+	
+	print "Split: ",split
+	try:
+		for i in range(len(split)):
+			print i
 			marcov_chain.append([split[i],split[i+1],split[i+2],split[i+3],split[i+4]])
-            #print split[i], split[i+1], "->", split[i+2]
-        except:
-            pass
-    return marcov_chain
+			print split[i], split[i+1],split[i+2],split[i+3],  "->", split[i+4]
+	except:
+		pass
+	return marcov_chain
 
 ################################
 def write_to_corpus(marcov_chain):
@@ -47,8 +51,8 @@ def read_corpus():
 	conn.close()
 
 if __name__ == "__main__":
-	content = read_txt("Text2.txt")
-	print type(content)
-	marcov_chain = create_marcov_chain(content)
+	#content = read_txt("Outside of physics we know nothing of action at a distance.")
+	#print type(content)
+	marcov_chain = create_marcov_chain("Outside of physics we know nothing of action at a distance of blabla.")
 	write_to_corpus(marcov_chain)
 	#read_corpus()

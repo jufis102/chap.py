@@ -21,7 +21,13 @@ def init_learning(input_text):
 @app.route('/get_user_input')
 def get_user_input():
     input = request.args.get('input', type=str)
-    print input
+    input = input.lower()
+    
+    if 'send' in request.form:
+        print input
+        marcov_chain = create_marcov_chain(input)
+        write_to_corpus(input)
+        
     output = get_top_entropies(input)
     #print output
     #to do verarbeite input = output
