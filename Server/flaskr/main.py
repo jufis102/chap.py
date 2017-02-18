@@ -18,15 +18,13 @@ def init_learning(input_text):
     calculate_probability()
     create_entropy()
 
-@app.route('/get_user_input')
+@app.route('/get_user_input', methods=["GET","POST"])
 def get_user_input():
     input = request.args.get('input', type=str)
     input = input.lower()
+    #print "Input: ",input
     
-    if 'send' in request.form:
-        print input
-        marcov_chain = create_marcov_chain(input)
-        write_to_corpus(input)
+    init_learning(input)
         
     output = get_top_entropies(input)
     #print output

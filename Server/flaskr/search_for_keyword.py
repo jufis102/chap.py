@@ -10,14 +10,14 @@ import re
 def get_top_entropies(input):
 	
 	user_input = input.split(" ")
-	print "Input: ",user_input
+	#print "Input: ",user_input
 	
 	conn = sqlite3.connect("chappies_brain.db")
 	c = conn.cursor()
 	
 	top_entropie_words = []
 	for element in user_input:
-		print "Element: " ,element
+		#print "Element: " ,element
 		# if sql null
 		for ausgabe in c.execute('SELECT wort,entropy FROM Entropy \
 		WHERE wort = "'+element+'" ORDER BY entropy DESC limit 1'):
@@ -27,11 +27,11 @@ def get_top_entropies(input):
 		cursor = c.execute('SELECT wort,entropy FROM Entropy \
 		WHERE wort = "'+element+'" ORDER BY entropy DESC limit 1')
 		cursor_len = len(cursor.fetchall())
-		print cursor_len
+		print "Cursor_len: ", cursor_len
 		
 		if cursor_len > 0:
 			ausgabe = list(ausgabe)
-			print ausgabe
+			#print ausgabe
 			top_entropie_words.append(ausgabe)
 		
 		'''sortiert die Liste nach ihrer Entropy'''
@@ -109,17 +109,17 @@ def search_for_keyword(top_3_words):
 	"%"+" "+top2+" "+"%","%"+" "+top3+" "+"%"])
 	
 	TopWords_len = len(TopWords.fetchall())
-	print "TopWords_len",TopWords_len
+	#print "TopWords_len",TopWords_len
 		
 	conn.commit()
 	conn.close()
 			
 	if TopWords_len > 0:
 		ergebnis = list(ergebnis)
-		print "Ergebnis: ",ergebnis
+		#print "Ergebnis: ",ergebnis
 		satz = ergebnis[0]
 	if TopWords_len == 0:
-		print "0"
+		#print "0"
 		ergebnis = "Chappy weiss das noch nicht."
 		satz = ergebnis
 		return ergebnis
@@ -145,7 +145,7 @@ def search_for_keyword(top_3_words):
 			except: 
 				pass
 		neuerSatz = ' '.join(neuerSatz)
-		print "Neuer Satz: ",neuerSatz
+		#print "Neuer Satz: ",neuerSatz
 
 		#try:
 		for row in c.execute('SELECT kette, probability FROM Kette WHERE\
@@ -165,7 +165,7 @@ def search_for_keyword(top_3_words):
 			ergebnis = ergebnis[0]
 
 			vorgaenger_wort = ergebnis.split(" ")
-			print "Vorgaenger Ergebnis: ",ergebnis
+			#print "Vorgaenger Ergebnis: ",ergebnis
 
 			response_predecessor.insert(0,vorgaenger_wort[0])
 
@@ -190,40 +190,44 @@ def search_for_keyword(top_3_words):
 				pass
 		neuerSatz = ' '.join(neuerSatz)
 		#print neuerSatz
-		''' to do: vernueftige fehlerbehandlung! wenn kein ergebnis mehr vorliegt was dannmachen?'''
-		for row in c.execute('SELECT kette, probability FROM Kette WHERE \
-		(kette like ?) AND NOT (kette like ?) ORDER BY probability DESC limit 1 ',["%"+neuerSatz+"%","%"+satz+"%"]):
-			ergebnis = row
-
-		ergebnis = list(ergebnis)
-		ergebnis = ergebnis[0]
-		conn.commit()
-		conn.close()
-
-		nachfolger_wort = ergebnis.split(" ")
-		print "Nachfolger Ergebnis: ",ergebnis
-		regex = "."
 		try:
-			response_successor.append(nachfolger_wort[-1])
-		except: 
-			pass
-		#print "nachfolger_wort[-1]" +nachfolger_wort[-1]
-		if "." in nachfolger_wort[-1]:
-			print "Found END of Sentence"
-		else:
-			search_successor_chain(ergebnis)
+			''' to do: vernueftige fehlerbehandlung! wenn kein ergebnis mehr vorliegt was dannmachen?'''
+			for row in c.execute('SELECT kette, probability FROM Kette WHERE \
+			(kette like ?) AND NOT (kette like ?) ORDER BY probability DESC limit 1 ',["%"+neuerSatz+"%","%"+satz+"%"]):
+				ergebnis = row
 
+			ergebnis = list(ergebnis)
+			ergebnis = ergebnis[0]
+			conn.commit()
+			conn.close()
+
+			nachfolger_wort = ergebnis.split(" ")
+			#print "Nachfolger Ergebnis: ",ergebnis
+			regex = "."
+			try:
+				response_successor.append(nachfolger_wort[-1])
+			except: 
+				pass
+			#print "nachfolger_wort[-1]" +nachfolger_wort[-1]
+			if "." in nachfolger_wort[-1]:
+				print "Found END of Sentence"
+			else:
+				search_successor_chain(ergebnis)
+		except:
+			pass
 
 	search_predecessor_chain(satz)
 	search_successor_chain(satz)
 
-	#print "predecessor: ",response_predecessor
+	print "predecessor: ",response_predecessor
 	response_predecessor_finish = []
 	
-	'''to do: ueberlegen was passiert wenn erster Satz (findet keinen punkt)'''
+	'''to do: ueberlegen was passiert wenn erster Satz (findet keinen punkt)
+		andere option fuer fehlerabfrage ueberlegen anstatt try except
+	'''
 	try:
 		for item in response_predecessor:
-			print "Item:",item
+			#print "Item:",item
 			if "." in item:
 				index_dot = response_predecessor.index(item)
 				print "index_dot: ",index_dot

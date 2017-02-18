@@ -18,12 +18,13 @@ def create_marcov_chain(input):
 	#input.lower macht alle woerter klein
 	split = (input.lower()).split(" ")
 	
-	print "Split: ",split
+	#print "Split: ",split
 	try:
 		for i in range(len(split)):
-			print i
+			#print i
+			#6gramme ausprobieren..bzw einfach mal rumprobieren und ueberlegen warum ich 5gramme genommen habe
 			marcov_chain.append([split[i],split[i+1],split[i+2],split[i+3],split[i+4]])
-			print split[i], split[i+1],split[i+2],split[i+3],  "->", split[i+4]
+			#print split[i], split[i+1],split[i+2],split[i+3],  "->", split[i+4]
 	except:
 		pass
 	return marcov_chain

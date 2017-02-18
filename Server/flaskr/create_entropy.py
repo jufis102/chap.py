@@ -27,7 +27,7 @@ def create_entropy():
 	StringList = (file_str.getvalue()).split(" ")
 	
 	countingWords = Counter(StringList)
-	print countingWords
+	#print countingWords
 	
 	'''gesamte Laenge des Corpus '''
 	laenge = len(countingWords)
