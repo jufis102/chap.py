@@ -62,7 +62,7 @@ def admintool():
             c.execute("DELETE from entropy")
             conn.commit()
             conn.close()
-            print "loesche db..."
+            print("loesche db...")
 
     return render_template('admintool.html')
 

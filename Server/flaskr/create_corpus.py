@@ -46,7 +46,7 @@ def read_corpus():
 	c = conn.cursor()
 
 	for row in c.execute('SELECT * FROM corpus'):
-		print row
+		print(row)
 
 	conn.commit()
 	conn.close()

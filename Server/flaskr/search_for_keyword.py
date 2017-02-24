@@ -22,12 +22,12 @@ def get_top_entropies(input):
 		for ausgabe in c.execute('SELECT wort,entropy FROM Entropy \
 		WHERE wort = "'+element+'" ORDER BY entropy DESC limit 1'):
 			
-			print "sql Entropy: ",ausgabe
+			print("sql Entropy: ",ausgabe)
 			
 		cursor = c.execute('SELECT wort,entropy FROM Entropy \
 		WHERE wort = "'+element+'" ORDER BY entropy DESC limit 1')
 		cursor_len = len(cursor.fetchall())
-		print "Cursor_len: ", cursor_len
+		print("Cursor_len: ", cursor_len)
 		
 		if cursor_len > 0:
 			ausgabe = list(ausgabe)
@@ -37,11 +37,11 @@ def get_top_entropies(input):
 		'''sortiert die Liste nach ihrer Entropy'''
 	top_entropie_words.sort(key = lambda row: row[1])
 
-	print "Top_Entropy_Words: ",top_entropie_words
+	print("Top_Entropy_Words: ",top_entropie_words)
 
 	top_3_words = top_entropie_words[0:3]
 	top_3_words = [item[0] for item in top_3_words]
-	print "Top 3: ",top_3_words
+	print("Top 3: ",top_3_words)
 	'''
 	-top drei keywords sollen beachtet werden
 	-es sollen die keywords mit der besten entropie(niedrigster wert) genommen werden
@@ -77,7 +77,7 @@ def search_for_keyword(top_3_words):
 	except:
 		top3 = "null"
 	
-	print "Top1= ",top1," Top2= ",top2," Top3= ",top3
+	print("Top1= ",top1," Top2= ",top2," Top3= ",top3)
 
 	for row in c.execute('SELECT kette, probability FROM Kette \
 	WHERE \
@@ -155,7 +155,7 @@ def search_for_keyword(top_3_words):
 		predecessor_anfrage = c.execute('SELECT kette, probability FROM Kette WHERE\
 		(kette like ?) AND NOT (kette like ?) ORDER BY probability DESC limit 1 ',["%"+neuerSatz+"%","%"+satz+"%"])
 		predecessor_anfrage_len = len(predecessor_anfrage.fetchall())
-		print "Predecessor_len: ",predecessor_anfrage_len
+		print("Predecessor_len: ",predecessor_anfrage_len)
 		
 		conn.commit()
 		conn.close()
@@ -170,11 +170,11 @@ def search_for_keyword(top_3_words):
 			response_predecessor.insert(0,vorgaenger_wort[0])
 
 			if "." in vorgaenger_wort[-1]:
-				print "Vorheriger Satz erkannt! Beginne hier:"
+				print("Vorheriger Satz erkannt! Beginne hier:")
 			else:
 				search_predecessor_chain(ergebnis)
 		if predecessor_anfrage_len == 0:
-			print "kein Vorgaenger"
+			print("kein Vorgaenger")
 
 	def search_successor_chain(satz):
 		conn = sqlite3.connect("chappies_brain.db")
@@ -210,7 +210,7 @@ def search_for_keyword(top_3_words):
 				pass
 			#print "nachfolger_wort[-1]" +nachfolger_wort[-1]
 			if "." in nachfolger_wort[-1]:
-				print "Found END of Sentence"
+				print("Found END of Sentence")
 			else:
 				search_successor_chain(ergebnis)
 		except:
@@ -219,7 +219,7 @@ def search_for_keyword(top_3_words):
 	search_predecessor_chain(satz)
 	search_successor_chain(satz)
 
-	print "predecessor: ",response_predecessor
+	print("predecessor: ",response_predecessor)
 	response_predecessor_finish = []
 	
 	'''to do: ueberlegen was passiert wenn erster Satz (findet keinen punkt)
@@ -230,7 +230,7 @@ def search_for_keyword(top_3_words):
 			#print "Item:",item
 			if "." in item:
 				index_dot = response_predecessor.index(item)
-				print "index_dot: ",index_dot
+				print("index_dot: ",index_dot)
 	except:
 		pass
 	# endgueltige vorgaengerliste bekommt vorganger uebergeben, wenn es
@@ -250,8 +250,8 @@ def search_for_keyword(top_3_words):
 		pass
 	# vorgaenger und nachfolger werden zu einem Satz
 	response = response_predecessor+" "+response_successor
-	print "predecessor: ",response_predecessor
-	print "sucessor: ",response_successor
+	print("predecessor: ",response_predecessor)
+	print("sucessor: ",response_successor)
 	return response
 
 if __name__ == "__main__":

@@ -2,7 +2,7 @@ import math
 import sqlite3
 import re
 from collections import Counter
-from cStringIO import StringIO
+from io import StringIO
 
 def delete_entropy():
 	conn = sqlite3.connect("chappies_brain.db")
@@ -34,7 +34,7 @@ def create_entropy():
 	#print "Corpuslaenge: ",laenge
 	
 	'''berechnung der Wortwahrscheinlichkeiten und der Entropy'''
-	for key,value in countingWords.iteritems():
+	for key,value in countingWords.items():
 		#print key,value
 		wahrscheinlichkeit = float(value)/float(laenge)
 		#print "Wort: ", key, "| Worthaeufigkeit: ",value, "| Wahrscheinlichkeit: ", wahrscheinlichkeit
