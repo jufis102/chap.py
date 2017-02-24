@@ -18,17 +18,16 @@ def create_entropy():
 	conn = sqlite3.connect("chappies_brain.db")
 	c = conn.cursor()
 
-	file_str = StringIO()
+	file_str = []
 
 	for row in c.execute('SELECT corpus FROM corpus'):
-		file_str.write(row[0])
-	#print file_str
-	
-	StringList = (file_str.getvalue()).split(" ")
-	
-	countingWords = Counter(StringList)
+		kette = row[0].rstrip()
+		kette = row[0].split(" ")  #ToDO: sonderzeichen entfernen damit einzelnes wort erkannt und berechnet wird
+		for i in kette: 
+			file_str.append(i)
+			
+	countingWords = Counter(file_str)
 	#print countingWords
-	
 	'''gesamte Laenge des Corpus '''
 	laenge = len(countingWords)
 	#print "Corpuslaenge: ",laenge

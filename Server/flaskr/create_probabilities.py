@@ -38,5 +38,5 @@ def calculate_probability():
 	conn.commit()
 	conn.close()
 
-#if __name__ == "__main__":
-	#calculate_probability()
+if __name__ == "__main__":
+	calculate_probability()

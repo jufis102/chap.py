@@ -2,12 +2,15 @@
 	--anfangs und endsymbole in den ketten festlegen, damit saetze Sinn ergeben
 '''
 import sqlite3
+from nltk import ngrams
+
+n = 5
 
 ###############################
 '''einlesen der Textdateien'''
 def read_txt(filename):
-	with open(filename) as f:
-		content = f.read().decode('utf-8')
+	with open(filename) as data:
+		content = data.read()
 		return content
 		
 ###############################
@@ -15,18 +18,13 @@ def read_txt(filename):
 def create_marcov_chain(input):
 	marcov_chain = []
 	
-	#input.lower macht alle woerter klein
-	split = (input.lower()).split(" ")
+	input = input.lower()
+	input = input.rstrip()
+	print(input)
 	
-	#print "Split: ",split
-	try:
-		for i in range(len(split)):
-			#print i
-			#6gramme ausprobieren..bzw einfach mal rumprobieren und ueberlegen warum ich 5gramme genommen habe
-			marcov_chain.append([split[i],split[i+1],split[i+2],split[i+3],split[i+4]])
-			#print split[i], split[i+1],split[i+2],split[i+3],  "->", split[i+4]
-	except:
-		pass
+	fivegrams = ngrams(input.split(), n)
+	for grams in fivegrams:
+		marcov_chain.append(list(grams))
 	return marcov_chain
 
 ################################
@@ -52,8 +50,7 @@ def read_corpus():
 	conn.close()
 
 if __name__ == "__main__":
-	#content = read_txt("Outside of physics we know nothing of action at a distance.")
-	#print type(content)
-	marcov_chain = create_marcov_chain("Outside of physics we know nothing of action at a distance of blabla.")
+	text = read_txt("wine.txt")
+	marcov_chain = create_marcov_chain(text)
 	write_to_corpus(marcov_chain)
 	#read_corpus()
