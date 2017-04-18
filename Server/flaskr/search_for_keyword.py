@@ -99,81 +99,147 @@ def search_for_keyword(top_3_words):
 		ergebnis = row
 		print(row) # daraus random einen wählen
 	"""
+	print("------------------------------")
+	print("Starte Fall 1: ")
+	print("------------------------------")
 	
 	chains = c.execute('SELECT kette, probability FROM Kette \
 	WHERE \
 	   (kette like ? AND kette like ? AND kette like ? )\
-	ORDER BY probability DESC',["%"+" "+top1+" "+"%","%"+" "+top2+" "+"%","%"+" "+top3+" "+"%"])
+	ORDER BY probability DESC',["%"+top1+" "+"%","%"+" "+top2+" "+"%","%"+" "+top3+"%"])
 	
 	result = chains.fetchall()
-	len_result = len(result)
-	print(len_result)
 	conn.commit()
 	conn.close()
+	print("Ergebnis: ",len(result))
 	for i in result:
 		print(i)
-
-	chains = c.execute('SELECT kette, probability FROM Kette \
-	WHERE \
-	   (kette like ? AND kette like ? )\
-	ORDER BY probability DESC',["%"+" "+top1+" "+"%","%"+" "+top2+" "+"%"])
-	
-	result = chains.fetchall()
-	len_result = len(result)
-	print(len_result)
-	conn.commit()
-	conn.close()
-	for i in result:
-		print(i)
-	
-	chains = c.execute('SELECT kette, probability FROM Kette \
-	WHERE \
-	   (kette like ? AND kette like ? )\
-	ORDER BY probability DESC',["%"+" "+top1+" "+"%","%"+" "+top3+" "+"%"])
-
-	result = chains.fetchall()
-	len_result = len(result)
-	print(len_result)
-	conn.commit()
-	conn.close()
-	for i in result:
-		print(i)
-	
 		
-	time.sleep(5000)
-	
-	
-	TopWords = c.execute('SELECT kette, probability FROM Kette \
-	WHERE \
-	   (kette like ? AND kette like ? AND kette like ?)\
-	OR (kette like ? AND kette like ?)\
-	OR (kette like ? AND kette like ?)\
-	OR (kette like ? AND kette like ?)\
-	OR (kette like ?)\
-	OR (kette like ?)\
-	OR (kette like ?)\
-	ORDER BY probability DESC limit 1',["%"+" "+top1+" "+"%","%"+" "\
-	+top2+" "+"%","%"+" "+top3+" "+"%",\
-	"%"+" "+top1+" "+"%","%"+" "+top2+" "+"%",\
-	"%"+" "+top1+" "+"%","%"+" "+top3+" "+"%","%"+" "+top2+" "+\
-	"%","%"+" "+top3+" "+"%","%"+" "+top1+" "+"%",\
-	"%"+" "+top2+" "+"%","%"+" "+top3+" "+"%"])
-	
-	TopWords_len = len(TopWords.fetchall())
+	if len(result) == 0:
+	#if True:
+		print("------------------------------")
+		print("Fall 1 Fehlgeschlagen")
+		print("Starte Fall 2: ")
+		print("------------------------------")
+		conn = sqlite3.connect("chappies_brain.db")
+		c = conn.cursor()
+		chains = c.execute('SELECT kette, probability FROM Kette \
+		WHERE \
+		   (kette like ? AND kette like ? )\
+		ORDER BY probability DESC',["%"+" "+top1+" "+"%","%"+" "+top2+" "+"%"])
 		
-	conn.commit()
-	conn.close()
+		result = chains.fetchall()
+		conn.commit()
+		conn.close()
+		print("Ergebnis: ",len(result))
+		for i in result:
+			print(i)
+
+		if len(result) == 0:
+		#if True:
+			print("------------------------------")
+			print("Fall 2 Fehlgeschlagen")
+			print("Starte Fall 3: ")
+			print("------------------------------")
+			conn = sqlite3.connect("chappies_brain.db")
+			c = conn.cursor()
+			chains = c.execute('SELECT kette, probability FROM Kette \
+			WHERE \
+			   (kette like ? AND kette like ? )\
+			ORDER BY probability DESC',["%"+" "+top1+" "+"%","%"+" "+top3+" "+"%"])
 			
-	if TopWords_len > 0:
-		ergebnis = list(ergebnis)
+			result = chains.fetchall()
+			conn.commit()
+			conn.close()
+			print(len(result))
+			for i in result:
+				print(i)
 
-		satz = ergebnis[0]
-	if TopWords_len == 0:
+			if len(result) == 0:
+			#if True:
+				print("------------------------------")
+				print("Fall 3 Fehlgeschlagen")
+				print("Starte Fall 4: ")
+				print("------------------------------")
+				conn = sqlite3.connect("chappies_brain.db")
+				c = conn.cursor()
+				chains = c.execute('SELECT kette, probability FROM Kette \
+				WHERE \
+				   (kette like ? AND kette like ? )\
+				ORDER BY probability DESC',["%"+" "+top2+" "+"%","%"+" "+top3+" "+"%"])
+				
+				result = chains.fetchall()
+				conn.commit()
+				conn.close()
+				print(len(result))
+				for i in result:
+					print(i)
 
-		ergebnis = "Chappy weiss das noch nicht." # To do: Lieber eine Auswahl von Sätzen random ausgeben / Täuschung des Nutzers
-		satz = ergebnis
-		return ergebnis
+				if len(result) == 0:
+				#if True:
+					print("------------------------------")
+					print("Fall 4 Fehlgeschlagen")
+					print("Starte Fall 5: ")
+					print("------------------------------")
+					conn = sqlite3.connect("chappies_brain.db")
+					c = conn.cursor()
+					chains = c.execute('SELECT kette, probability FROM Kette \
+					WHERE \
+					   (kette like ? )\
+					ORDER BY probability DESC',["%"+" "+top1+" "+"%"])
+					
+					result = chains.fetchall()
+					conn.commit()
+					conn.close()
+					print(len(result))
+					for i in result:
+						print(i)
+						
+					if len(result) == 0:
+					#if True:
+						print("------------------------------")
+						print("Fall 5 Fehlgeschlagen")
+						print("Starte Fall 6: ")
+						print("------------------------------")
+						conn = sqlite3.connect("chappies_brain.db")
+						c = conn.cursor()
+						chains = c.execute('SELECT kette, probability FROM Kette \
+						WHERE \
+						   (kette like ? )\
+						ORDER BY probability DESC limit 10',["%"+" "+top2+" "+"%"])
+						
+						result = chains.fetchall()
+						conn.commit()
+						conn.close()
+						print(len(result))
+						for i in result:
+							print(i)
 
+						if len(result) == 0:
+						#if True:
+							print("------------------------------")
+							print("Fall 6 Fehlgeschlagen")
+							print("Starte Fall 7: ")
+							print("------------------------------")
+							conn = sqlite3.connect("chappies_brain.db")
+							c = conn.cursor()
+							chains = c.execute('SELECT kette, probability FROM Kette \
+							WHERE \
+							   (kette like ? )\
+							ORDER BY probability DESC limit 10',["%"+" "+top3+" "+"%"])
+							
+							result = chains.fetchall()
+							conn.commit()
+							conn.close()
+							print(len(result))
+							for i in result:
+								print(i)
+
+	result = ([x[0] for x in result])
+	satz = result[0]
+	print("----------------------------------")
+	print("Satz:" ,satz)
+	#time.sleep(5000)
 
 	response_predecessor.append(satz)
 	response_successor.append(satz)
@@ -328,6 +394,6 @@ if __name__ == "__main__":
 	#top_3_words = get_top_entropies("i want an quite intense wine")
 	#top_3_words = get_top_entropies("mineral palate")
 	#top_3_words = get_top_entropies("tell me about Provence wine")
-	top_3_words = get_top_entropies("australian style wine")
+	top_3_words = get_top_entropies("tell me something about an quite intense red wine")
 	search_for_keyword(top_3_words)
 
