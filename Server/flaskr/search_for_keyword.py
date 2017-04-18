@@ -102,8 +102,34 @@ def search_for_keyword(top_3_words):
 	
 	chains = c.execute('SELECT kette, probability FROM Kette \
 	WHERE \
-	   (kette like ? AND kette like ?)\
-	ORDER BY probability DESC',["%"+" "+top2+" "+"%","%"+" "+top3+" "+"%"])
+	   (kette like ? AND kette like ? AND kette like ? )\
+	ORDER BY probability DESC',["%"+" "+top1+" "+"%","%"+" "+top2+" "+"%","%"+" "+top3+" "+"%"])
+	
+	result = chains.fetchall()
+	len_result = len(result)
+	print(len_result)
+	conn.commit()
+	conn.close()
+	for i in result:
+		print(i)
+
+	chains = c.execute('SELECT kette, probability FROM Kette \
+	WHERE \
+	   (kette like ? AND kette like ? )\
+	ORDER BY probability DESC',["%"+" "+top1+" "+"%","%"+" "+top2+" "+"%"])
+	
+	result = chains.fetchall()
+	len_result = len(result)
+	print(len_result)
+	conn.commit()
+	conn.close()
+	for i in result:
+		print(i)
+	
+	chains = c.execute('SELECT kette, probability FROM Kette \
+	WHERE \
+	   (kette like ? AND kette like ? )\
+	ORDER BY probability DESC',["%"+" "+top1+" "+"%","%"+" "+top3+" "+"%"])
 
 	result = chains.fetchall()
 	len_result = len(result)
@@ -112,9 +138,7 @@ def search_for_keyword(top_3_words):
 	conn.close()
 	for i in result:
 		print(i)
-		
-		
-		
+	
 		
 	time.sleep(5000)
 	
