@@ -78,7 +78,7 @@ def search_for_keyword(top_3_words):
 	print("1. = ",top1)
 	print("2. = ",top2) 
 	print("3. = ",top3)
-	"""
+
 	for row in c.execute('SELECT kette, probability FROM Kette \
 	WHERE \
 	   (kette like ? AND kette like ? AND kette like ?)\
@@ -88,37 +88,14 @@ def search_for_keyword(top_3_words):
 	OR (kette like ?)\
 	OR (kette like ?)\
 	OR (kette like ?)\
-	ORDER BY probability DESC limit 100',
+	ORDER BY probability DESC limit 1',
 	["%"+" "+top1+" "+"%","%"+" "+top2+" "+"%","%"+" "+top3+" "+"%",\
 	"%"+" "+top1+" "+"%","%"+" "+top2+" "+"%",\
 	"%"+" "+top1+" "+"%","%"+" "+top3+" "+"%","%"+" "\
-	+top2+" "+"%","%"+" "+top3+\
-	" "+"%","%"+" "+top1+" "+"%",\
-	"%"+" "+top2+" "+\
-	"%","%"+" "+top3+" "+"%"]):
+	+top2+" "+"%","%"+" "+top3+" "+"%","%"+" "+top1+" "+"%",\
+	"%"+" "+top2+" "+"%","%"+" "+top3+" "+"%"]):
 		ergebnis = row
-		print(row) # daraus random einen wählen
-	"""
-	
-	chains = c.execute('SELECT kette, probability FROM Kette \
-	WHERE \
-	   (kette like ? AND kette like ?)\
-	ORDER BY probability DESC',["%"+" "+top2+" "+"%","%"+" "+top3+" "+"%"])
 
-	result = chains.fetchall()
-	len_result = len(result)
-	print(len_result)
-	conn.commit()
-	conn.close()
-	for i in result:
-		print(i)
-		
-		
-		
-		
-	time.sleep(5000)
-	
-	
 	TopWords = c.execute('SELECT kette, probability FROM Kette \
 	WHERE \
 	   (kette like ? AND kette like ? AND kette like ?)\
@@ -157,7 +134,7 @@ def search_for_keyword(top_3_words):
 	print("Antwort PREDECESSOR: ",response_predecessor)
 	print("Antwort SUCCESSOR: ",response_successor)
 	print("----------------------------------")
-	#time.sleep(5000)
+
 
 
 	def search_predecessor_chain(satz):
@@ -303,7 +280,7 @@ if __name__ == "__main__":
 	""" Helper Function / Debugging """
 	#top_3_words = get_top_entropies("i want an quite intense wine")
 	#top_3_words = get_top_entropies("mineral palate")
-	#top_3_words = get_top_entropies("tell me about Provence wine")
-	top_3_words = get_top_entropies("australian style wine")
+	top_3_words = get_top_entropies("wine excellent")
+	#top_3_words = get_top_entropies("pretty good")
 	search_for_keyword(top_3_words)
 

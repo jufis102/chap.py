@@ -51,5 +51,5 @@ def create_entropy():
 	conn.close()
 	
 if __name__ == "__main__":
-	delete_entropy()
+	#delete_entropy()
 	create_entropy()
