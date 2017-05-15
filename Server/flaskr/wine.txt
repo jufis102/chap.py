@@ -1054,7 +1054,7 @@ Liquid minerals and excellent fruit.  Very good and will be lovely.
 Very dense - a cross between 98 and 90.   Qute a monster, but perhaps some of the older wines were that way in their youth. Still, this will surely be lovely in ten years. 
 Mineral again but a bit more restrained and classic - less exotic than the 96.   I like it a lot - almost more than the 96 - very stylish and balanced.  
 A blend of 91, 90 and 89.  Apple and mushroom nose and palate - very meaty and substantial.  Big finish. 
-Two bottles, quite different.  One very honied and becoming a bit austere.  One fresher with nice richness.   Both quite good. 
+Two bottles, quite different.  One very honied and becoming a bit austere.  One fresher with nice richness. Both quite good. 
 Pleasant old thing - it may be the end of a long night, but it seems just to be fading a touch.  
 
 Nutty, honied, touch of herbs, quite elusive - occasionally has a certain flatness. Rather attractive.  
@@ -1331,4 +1331,30 @@ Balanced and rich, but perhaps not showing ideally now.  A little more time migh
 Very creamy but not rich.   Dies a bit in the glass.   Interesting, and pretty good for an average vintage, vineyard, etc. Top 
 Difficult on opening - gamy almost and austere.  Opens out nicely. Top 
 Nicely set up and needing a bit of time yet.   I feel this hasn't the fineness to be great but it is very good.  
+
+The red-wine production process involves extraction of color and flavor components from the grape skin. 
+Red wine is made from dark-colored grape varieties. The actual color of the wine can range from violet, typical of young wines, through red for mature wines, to brown for older red wines. 
+The juice from most purple grapes is actually greenish-white; the red color comes from anthocyan pigments (also called anthocyanins) present in the skin of the grape; 
+exceptions are the relatively uncommon teinturier varieties, which actually have red flesh and produce red juice.
+
+White wine can be straw-yellow, yellow-green, or yellow-gold. Fermentation of the non-colored grape pulp produces white wine. 
+The grapes from which white wine is produced are typically green or yellow. Some varieties are well-known, such as the Chardonnay, Sauvignon, and Riesling. 
+Other white wines are blended from multiple varieties; Tokay, Sherry, and Sauternes are examples of these. 
+Dark-skinned grapes may be used to produce white wine if the wine-maker is careful not to let the skin stain the wort during the separation of the pulp-juice. 
+Pinot noir, for example, is commonly used to produce champagne.
+Dry (non-sweet) white wine is the most common, derived from the complete fermentation of the wort. Sweet wines are produced when the fermentation is interrupted before all the grape sugars are converted into alcohol. 
+Sparkling wines, which are mostly white wines, are produced by not allowing carbon dioxide from the fermentation to escape during fermentation, which takes place in the bottle rather than in the barrel.
+
+A rosé wine incorporates some of the color from the grape skins, but not enough to qualify it as a red wine. 
+It may be the oldest known type of wine, as it is the most straightforward to make with the skin contact method. 
+The pink color can range from a pale orange to a vivid near-purple, depending on the varietals used and wine-making techniques. 
+There are three primary ways to produce rosé wine: skin contact (allowing dark grape skins to stain the wort), saignée (removing juice from the must early in fermentation and continuing fermentation of the juice separately), and blending (uncommon and discouraged in most wine growing regions). 
+Rosé wines can be made still, semi-sparkling, or sparkling, with a wide range of sweetness levels from dry Provençal rosé to sweet White Zinfandels and blushes. 
+Rosé wines are made from a wide variety of grapes all over the world.
+
+Wines from other fruits, such as apples and berries, are usually named after the fruit from which they are produced combined with the word "wine" (for example, apple wine and elderberry wine) and are generically called fruit wine or country wine (not to be confused with the French term vin de pays). 
+Other than the grape varieties traditionally used for wine-making, most fruits naturally lack either sufficient fermentable sugars, relatively low acidity, yeast nutrients needed to promote or maintain fermentation, or a combination of these three characteristics. 
+This is probably one of the main reasons why wine derived from grapes has historically been more prevalent by far than other types, and why specific types of fruit wine have generally been confined to regions in which the fruits were native or introduced for other reasons.
+
 </ul>
+

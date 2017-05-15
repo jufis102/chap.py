@@ -99,6 +99,8 @@ def search_for_keyword(top_3_words):
 		ergebnis = row
 		print(row) # daraus random einen wählen
 	"""
+	
+	"""Sucht nach Kette in der möglichst alle topEntropie Wörter enthalten sind"""
 	print("------------------------------")
 	print("Starte Fall 1: ")
 	print("------------------------------")

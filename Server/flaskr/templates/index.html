@@ -18,7 +18,6 @@
   });
 </script>
 
-
 <div class="col-sm-6 col-sm-offset-3">
   <fieldset>
     <legend>Chap.py <img src="{{ url_for('static', filename='res/robot.png') }}" alt="" height="64" width="64"></a></legend>
@@ -26,20 +25,19 @@
       <label for="textarea" >Chatbox</label>
 
         <textarea class="form-control" rows="5" id="result" name=result disabled=""></textarea>
-        <span class="help-block" >Chap.py's answer</span>
+        <!-- <span class="help-block" style="color:black"> Chap.py's answer</span>-->
 
     </div>
     
     <div class="form-group">
-      <label for="textArea" >Input</label>
+      <label for="textArea" >Talk to Chap.py</label>
         <textarea class="form-control" rows="3" id="textArea" name=input></textarea>
-        <span class="help-block">Talk to Chap.py</span>
+       <!-- <span class="help-block" style="color:black">Talk to Chap.py</span> -->
 
     </div>
 
     <div class="form-group">
-
-        <button type="submit" class="btn btn-primary" id=send name=send>Send</button>
+        <button type="submit" class="btn btn-info" id=send name=send>Send</button>
 
     </div>
   </fieldset>
