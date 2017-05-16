@@ -4,6 +4,8 @@ from create_corpus import write_to_corpus, create_marcov_chain, tokenize_sentenc
 from create_entropy import create_entropy
 from create_probabilities import calculate_probability, drop_probability
 import sqlite3
+import threading
+import time
 app = Flask(__name__)
 
 app.debug = True
@@ -15,10 +17,10 @@ def init_learning(input_text):
     print("MARCOV_CHAIN",marcov_chain)
     write_to_corpus(marcov_chain)
 
-    drop_probability()  # delete old probabilities
-    calculate_probability() # calculate new probabilites
+    #drop_probability()  # delete old probabilities
+    #calculate_probability() # calculate new probabilites
     
-    create_entropy()
+    #create_entropy()
 
 @app.route('/get_user_input', methods=["GET","POST"])
 def get_user_input():
@@ -35,33 +37,16 @@ def get_user_input():
 def index():
     return render_template('index.html')
 
+def learning_routine():
+	start_time=time.clock()
+	calculate_probability()
+	create_entropy()
+	end_time=time.clock()
+	a_time=end_time-start_time
+	print(a_time)
 
-@app.route('/admintool',methods=["GET","POST"])
-def admintool():
 
-    if 'submit_text' in request.form:
-        input_text = request.form['input_text']
-        #print input_text
-        input_text = input_text#.decode('utf-8')
-        init_learning(input_text)
-        #print type(input_text)
-        #marcov_chain = create_marcov_chain(input_text)
-        #write_to_corpus(marcov_chain)
-        #calculate_probability()
-        #create_entropy()
-        
-    if 'delete_db' in request.form:
-            conn = sqlite3.connect("chappies_brain.db")
-            c = conn.cursor()
-
-            c.execute("DELETE from corpus")
-            c.execute("DELETE from kette")
-            c.execute("DELETE from entropy")
-            conn.commit()
-            conn.close()
-            print("loesche db...")
-
-    return render_template('admintool.html')
+	
 
 
 

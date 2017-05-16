@@ -8,6 +8,7 @@ Finde bestmögliche Antwort aus DB
 import sqlite3
 import re
 import time
+import random
 
 
 def get_top_entropies(input):
@@ -108,7 +109,7 @@ def search_for_keyword(top_3_words):
 	chains = c.execute('SELECT kette, probability FROM Kette \
 	WHERE \
 	   (kette like ? AND kette like ? AND kette like ? )\
-	ORDER BY probability DESC',["%"+top1+" "+"%","%"+" "+top2+" "+"%","%"+" "+top3+"%"])
+	ORDER BY probability DESC limit 10',["%"+top1+" "+"%","%"+" "+top2+" "+"%","%"+" "+top3+"%"])
 	
 	result = chains.fetchall()
 	conn.commit()
@@ -128,7 +129,7 @@ def search_for_keyword(top_3_words):
 		chains = c.execute('SELECT kette, probability FROM Kette \
 		WHERE \
 		   (kette like ? AND kette like ? )\
-		ORDER BY probability DESC',["%"+" "+top1+" "+"%","%"+" "+top2+" "+"%"])
+		ORDER BY probability DESC limit 10',["%"+" "+top1+" "+"%","%"+" "+top2+" "+"%"])
 		
 		result = chains.fetchall()
 		conn.commit()
@@ -148,7 +149,7 @@ def search_for_keyword(top_3_words):
 			chains = c.execute('SELECT kette, probability FROM Kette \
 			WHERE \
 			   (kette like ? AND kette like ? )\
-			ORDER BY probability DESC',["%"+" "+top1+" "+"%","%"+" "+top3+" "+"%"])
+			ORDER BY probability DESC limit 10',["%"+" "+top1+" "+"%","%"+" "+top3+" "+"%"])
 			
 			result = chains.fetchall()
 			conn.commit()
@@ -168,7 +169,7 @@ def search_for_keyword(top_3_words):
 				chains = c.execute('SELECT kette, probability FROM Kette \
 				WHERE \
 				   (kette like ? AND kette like ? )\
-				ORDER BY probability DESC',["%"+" "+top2+" "+"%","%"+" "+top3+" "+"%"])
+				ORDER BY probability DESC limit 10',["%"+" "+top2+" "+"%","%"+" "+top3+" "+"%"])
 				
 				result = chains.fetchall()
 				conn.commit()
@@ -188,7 +189,7 @@ def search_for_keyword(top_3_words):
 					chains = c.execute('SELECT kette, probability FROM Kette \
 					WHERE \
 					   (kette like ? )\
-					ORDER BY probability DESC',["%"+" "+top1+" "+"%"])
+					ORDER BY probability DESC limit 10',["%"+" "+top1+" "+"%"])
 					
 					result = chains.fetchall()
 					conn.commit()
@@ -238,9 +239,13 @@ def search_for_keyword(top_3_words):
 								print(i)
 
 	result = ([x[0] for x in result])
-	satz = result[0]
+	''' random eines der möglichen Ergebnisse auswählen um die Vielfalt
+	zu erhöhen '''
 	print("----------------------------------")
-	print("Satz:" ,satz)
+	satz = random.choice(result)
+	print("Antwortkandidaten:", result)
+	print("----------------------------------")
+	print("RandomSatz:" ,satz)
 	#time.sleep(5000)
 
 	response_predecessor.append(satz)
@@ -396,6 +401,6 @@ if __name__ == "__main__":
 	#top_3_words = get_top_entropies("i want an quite intense wine")
 	#top_3_words = get_top_entropies("mineral palate")
 	#top_3_words = get_top_entropies("tell me about Provence wine")
-	top_3_words = get_top_entropies("tell me something about an quite intense red wine")
+	top_3_words = get_top_entropies("tell me something about an quite intensive red wine")
 	search_for_keyword(top_3_words)
 

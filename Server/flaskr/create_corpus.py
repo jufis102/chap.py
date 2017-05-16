@@ -74,46 +74,11 @@ def read_corpus():
 if __name__ == "__main__":
 	text = read_txt("wine.txt")
 	sentences = tokenize_sentences(text)
-	# wir haben nun jeweils die Sätze einzeln vorliegen. Dies ermöglicht es uns, marcov_chain mit multithreading arbeiten zu lassen.
-	#count_sentences = (len(sentences))
-	#
-	#print(count_sentences)
-	
-	#teiler = count_sentences/2
+
 	marcov_chain = create_marcov_chain(sentences)
-	#print(marcov_chain)
 	for i in marcov_chain:
 		print(i)
-	"""
-	n = 16
-	num = float(len(sentences))/n
-	l = [ sentences [i:i + int(num)] for i in range(0, (n-1)*int(num), int(num))]
-	l.append(sentences[(n-1)*int(num):])
-	#print(l[1])
-	list=["0:71596","71597:143192"]
-	
-	import multiprocessing
 
-	# Create a list of jobs and then iterate through
-	# the number of processes appending each process to
-	# the job list
-	
-	jobs = []
-	for i in range(0, n):
-		
-		process = multiprocessing.Process(target=create_marcov_chain, args=((l[i]), i))
-		jobs.append(process)
-
-	# Start the processes (i.e. calculate the random number lists)		
-	for j in jobs:
-		j.start()
-
-	# Ensure all of the processes have finished
-	for j in jobs:
-		j.join()
-
-	print("markov processing complete.")
-	"""
 	
 
 	
