@@ -242,10 +242,13 @@ def search_for_keyword(top_3_words):
 	''' random eines der möglichen Ergebnisse auswählen um die Vielfalt
 	zu erhöhen '''
 	print("----------------------------------")
+	if len(result) == 0:
+		result = ["wine","white","red"]
 	satz = random.choice(result)
 	print("Antwortkandidaten:", result)
 	print("----------------------------------")
 	print("RandomSatz:" ,satz)
+
 	#time.sleep(5000)
 
 	response_predecessor.append(satz)
@@ -393,6 +396,8 @@ def search_for_keyword(top_3_words):
 	response = response_predecessor+" "+response_successor
 	print("predecessor: ",response_predecessor)
 	print("sucessor: ",response_successor)
+	response = response.replace("!$! ", "")
+	response = response.replace(" !€!", "")
 	print("RESPONSE: ", response)
 	return response
 
