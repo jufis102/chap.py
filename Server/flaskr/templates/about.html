@@ -1,0 +1,19 @@
+{% include 'base.jinja' %}
+
+{% block content %}
+
+<div class="col-sm-6 col-sm-offset-3">
+  <fieldset>
+    <legend>Chap.py the wine expert <img src="{{ url_for('static', filename='res/robot.png') }}" alt="" height="64" width="64"></a></legend>
+    <div class="form-group">
+      <label for="textarea" ></label>
+
+        <textarea class="form-control" rows="5" id="result" name=result disabled="">Erstellt von: Julia Fischer
+Bachelorarbeit an der Heinrich-Heine-Universität Düsseldorf
+Thema: Ein probabilistisches Schema zur automatischen Induktion eines Chatbots: Theorie und Implementierung 
+</textarea>
+
+    </div>
+  </fieldset>
+</div>
+{% endblock %}

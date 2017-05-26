@@ -37,6 +37,10 @@ def get_user_input():
 def index():
     return render_template('index.html')
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
+    
 def learning_routine():
 	start_time=time.clock()
 	calculate_probability()
