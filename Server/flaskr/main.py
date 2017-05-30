@@ -25,7 +25,9 @@ def init_learning(input_text):
 @app.route('/get_user_input', methods=["GET","POST"])
 def get_user_input():
     input = request.args.get('input', type=str)
-    input = input.lower()    
+    input = input.lower()
+    input = input.replace('"','')
+    input = input.replace("'","")    
     output = get_top_entropies(input)
     output = search_for_keyword(output)
     init_learning(input)

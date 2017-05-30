@@ -1,20 +1,33 @@
 {% include 'base.jinja' %}
 
 {% block content %}
+
+
 <script type=text/javascript>
   $(function() {
+	  
     $('#send').bind('click', function() {
-      $.getJSON($SCRIPT_ROOT + '/get_user_input', {
-        input: $('textArea[name="input"]').val()
-        
-      }, function(data) {
-		$("#result").append("Du: "+data.input+"\n");
-        $("#result").append("Chap.py: "+data.result+"\n");
-        var result = document.getElementById('result');
-        result.scrollTop = result.scrollHeight;
-        document.getElementById("textArea").value = "";
-      });
-      return false;
+		if(document.getElementById("textArea").value.trim().length){
+				document.getElementById("send").disabled = true,
+
+			  $.getJSON($SCRIPT_ROOT + '/get_user_input', {
+				input: $('textArea[name="input"]').val()
+				
+				
+				
+			  }, function(data) {
+				
+				$("#result").append("Du: "+data.input+"\n");
+				$("#result").append("Chap.py: "+data.result+"\n");
+				var result = document.getElementById('result');
+				result.scrollTop = result.scrollHeight;
+				document.getElementById("textArea").value = "";
+				document.getElementById("send").disabled = false;
+			  });
+			  return false;
+		}
+		else {alert("You have to say something...");}
+		  
     });
   });
 </script>
@@ -33,13 +46,13 @@
     
     <div class="form-group">
       <label for="textArea" >Talk to Chap.py</label>
-        <textarea class="form-control" rows="3" id="textArea" name=input ></textarea>
+        <textarea class="form-control" rows="3" id="textArea" name=input  ></textarea>
        <!-- <span class="help-block" style="color:black">Talk to Chap.py</span> -->
 
     </div>
 
     <div class="form-group">
-        <button type="submit" class="btn btn-info" id=send name=send>Send</button>
+        <button type="submit" class="btn btn-info" id=send name=send >Send</button>
 
     </div>
   </fieldset>
